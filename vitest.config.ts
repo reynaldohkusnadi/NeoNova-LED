@@ -1,4 +1,5 @@
 import { defineConfig } from "vitest/config";
+import tailwind from "@tailwindcss/postcss";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
@@ -14,6 +15,11 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "."),
+    },
+  },
+  css: {
+    postcss: {
+      plugins: [tailwind],
     },
   },
 });

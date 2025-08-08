@@ -21,6 +21,8 @@ export interface Content {
   blurbShort: string;
   cardsCore: [Card, Card, Card];
   stats: [Stat, Stat];
+  /** Optional auxiliary cards; first element may drive Proven Impact aux slot */
+  cardsAux?: [Card];
   form: {
     success: string;
     ctaPrimary: string;
@@ -57,6 +59,7 @@ export const content = {
     { label: "Lighthouse", value: "90+" },
     { label: "Axe criticals", value: "0" },
   ],
+  cardsAux: undefined,
   form: {
     success: "Thanks! We'll be in touch shortly.",
     ctaPrimary: "Request demo",
