@@ -20,6 +20,16 @@ Project structure:
 - `lib/` Stubs for analytics and motion/a11y hooks
 - `styles/tokens.css` Base tokens
 
+## Analytics
+
+- Events are dispatched via `lib/analytics/track.ts` (stubbed).
+- Wire to Vercel Analytics or a custom endpoint in later stories.
+
+## References
+
+- Architecture: `docs/architecture/` and `docs/epics/`
+- PRD: `docs/prd/`
+
 ## Validations
 
 ```bash
