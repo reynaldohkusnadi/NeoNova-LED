@@ -1,6 +1,6 @@
 # EPIC-006 — Deployment, Security & CI
 
-Status: Proposed
+Status: Approved
 Owner: Tech Lead
 Timeline: Sprint 1–2
 

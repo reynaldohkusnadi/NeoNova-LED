@@ -1,6 +1,6 @@
 # EPIC-003 — Motion & 3D Hero
 
-Status: Proposed
+Status: Approved
 Owner: Motion/FE Lead
 Timeline: Sprint 2
 

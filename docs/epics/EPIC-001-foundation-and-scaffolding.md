@@ -1,6 +1,6 @@
 # EPIC-001 — Foundation & Scaffolding
 
-Status: Proposed
+Status: Approved
 Owner: Product Owner (Sarah), Tech Lead
 Timeline: Sprint 1
 

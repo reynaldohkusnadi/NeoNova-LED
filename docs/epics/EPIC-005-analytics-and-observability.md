@@ -1,6 +1,6 @@
 # EPIC-005 — Analytics & Observability
 
-Status: Proposed
+Status: Approved
 Owner: FE Lead
 Timeline: Sprint 2
 

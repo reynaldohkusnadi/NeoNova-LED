@@ -1,0 +1,32 @@
+:root {
+  /* Color palette */
+  --nn-background: #ffffff;
+  --nn-foreground: #0f172a;
+  --nn-primary: #0ea5e9;
+  --nn-primary-contrast: #ffffff;
+
+  /* Radii */
+  --nn-radius-sm: 6px;
+  --nn-radius-md: 10px;
+  --nn-radius-lg: 14px;
+
+  /* Z-index scale */
+  --nn-z-overlay: 40;
+  --nn-z-modal: 50;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nn-background: #0b0b0b;
+    --nn-foreground: #e5e7eb;
+    --nn-primary: #38bdf8;
+  }
+}
+
+/* Map to Tailwind CSS variables used in globals.css theme inline */
+:root {
+  --background: var(--nn-background);
+  --foreground: var(--nn-foreground);
+}
+
+

@@ -1,6 +1,6 @@
 # EPIC-002 — Content & Core Components (RSC)
 
-Status: Proposed
+Status: Approved
 Owner: Product Owner (Sarah), Frontend Lead
 Timeline: Sprint 1–2
 

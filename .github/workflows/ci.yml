@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Enable Corepack and pnpm
+        run: |
+          corepack enable pnpm
+          pnpm -v
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Lint
+        run: pnpm lint
+      - name: Build
+        run: pnpm build
+      - name: Lighthouse CI
+        run: pnpm dlx @lhci/cli@latest autorun --upload.target=temporary-public-storage
+      - name: Axe accessibility check
+        run: pnpm dlx @axe-core/cli@latest http://localhost:3000 --chromium --exit --timeout 60
+        env:
+          CI: true
+
+

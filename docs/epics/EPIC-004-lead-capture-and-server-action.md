@@ -1,6 +1,6 @@
 # EPIC-004 — Lead Capture & Server Action
 
-Status: Proposed
+Status: Approved
 Owner: Backend/FE Lead
 Timeline: Sprint 2
 
