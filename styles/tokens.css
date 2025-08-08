@@ -13,6 +13,7 @@
   /* Z-index scale */
   --nn-z-overlay: 40;
   --nn-z-modal: 50;
+  --nn-z-header: 30;
 }
 
 /* Accessibility guidance:

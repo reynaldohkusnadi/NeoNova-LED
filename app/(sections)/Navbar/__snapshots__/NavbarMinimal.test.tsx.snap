@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NavbarMinimal > renders CTA labels from content 1`] = `
+<header
+  class="sticky top-0 z-[var(--nn-z-header)] h-16 flex items-center border-b bg-[color-mix(in_oklab,var(--background)_92%,black)] backdrop-blur supports-[backdrop-filter]:bg-[color-mix(in_oklab,var(--background)_85%,black)]"
+>
+  <nav
+    aria-label="Primary"
+    class="w-full max-w-6xl mx-auto px-4 flex items-center justify-between"
+  >
+    <a
+      class="font-medium"
+      href="#"
+    >
+      Neo Nova
+    </a>
+    <div
+      class="flex gap-3 items-center"
+    >
+      <a
+        class="px-3 py-2 rounded-md border"
+        data-analytics-event="cta_click_secondary"
+        href="#"
+      >
+        Chat on WhatsApp
+      </a>
+      <a
+        class="px-3 py-2 rounded-md bg-[var(--nn-foreground)] text-[var(--nn-primary-contrast)] dark:bg-white dark:text-[var(--nn-foreground)]"
+        data-analytics-event="cta_click_primary"
+        href="#"
+      >
+        Request demo
+      </a>
+    </div>
+  </nav>
+</header>
+`;
