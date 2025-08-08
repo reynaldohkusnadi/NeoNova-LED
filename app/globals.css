@@ -31,3 +31,27 @@ body {
   outline: 2px solid color(display-p3 0 0.5 1 / 0.9);
   outline-offset: 2px;
 }
+
+/* Decorative shimmer effect for text */
+@keyframes nn-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--foreground) 20%, transparent) 0%,
+    color-mix(in oklab, var(--foreground) 85%, white) 50%,
+    color-mix(in oklab, var(--foreground) 20%, transparent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% 100%;
+  animation: nn-shimmer 2.25s linear infinite;
+}
