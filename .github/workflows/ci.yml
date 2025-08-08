@@ -9,6 +9,8 @@ on:
 jobs:
   build_test:
     runs-on: ubuntu-latest
+    env:
+      PNPM_ALLOW_ANY_BUILD: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

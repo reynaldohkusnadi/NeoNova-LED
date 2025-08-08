@@ -1,3 +1,9 @@
+/**
+ * Authoring workflow:
+ * - Edit this file in a feature branch via PR.
+ * - Preview will deploy and render content from this file only (no hardcoded strings in components).
+ * - Once approved, merge to main; Production reads the same typed export.
+ */
 export interface Card {
   id: string;
   headline: string;

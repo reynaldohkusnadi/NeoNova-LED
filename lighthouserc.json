@@ -2,6 +2,7 @@
   "ci": {
     "collect": {
       "url": ["http://localhost:3000/"],
+      "buildCommand": "pnpm build",
       "startServerCommand": "pnpm start -p 3000",
       "numberOfRuns": 1
     },
