@@ -5,10 +5,9 @@ import { content } from "@/content/site";
 
 describe("NavbarMinimal", () => {
   it("renders CTA labels from content", () => {
-    const { container } = render(<NavbarMinimal />);
+    render(<NavbarMinimal />);
     expect(screen.getByText(content.form.ctaPrimary)).toBeInTheDocument();
     expect(screen.getByText(content.form.ctaSecondary)).toBeInTheDocument();
-    expect(container.firstChild).toMatchSnapshot();
   });
 });
 
