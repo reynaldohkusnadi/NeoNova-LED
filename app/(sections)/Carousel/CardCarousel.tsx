@@ -7,7 +7,7 @@ interface CardCarouselProps {
 
 export default function CardCarousel({ cards }: CardCarouselProps) {
   return (
-    <section aria-label="Highlights" className="w-full max-w-5xl mx-auto">
+    <section aria-label="Highlights" className="w-full max-w-5xl mx-auto" data-carousel>
       <div className="grid sm:grid-cols-3 gap-4">
         {cards.map((card) => (
           <article
