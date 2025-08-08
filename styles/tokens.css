@@ -15,6 +15,11 @@
   --nn-z-modal: 50;
 }
 
+/* Accessibility guidance:
+   - Preferred CTA pair (AA+): background=--nn-foreground, text=--nn-primary-contrast (white).
+   - Dark mode CTA pair (AA+): background=white, text=--nn-foreground.
+*/
+
 @media (prefers-color-scheme: dark) {
   :root {
     --nn-background: #0b0b0b;
