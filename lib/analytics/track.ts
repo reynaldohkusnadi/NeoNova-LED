@@ -41,17 +41,26 @@ export function __resetAnalyticsDedupeForTests(): void {
   emittedOnceKeys.clear();
 }
 
-export function track(name: EventName, props?: Record<string, unknown>): void {
+// Overloads to support both new and legacy call sites
+export function track(name: EventName, props?: Record<string, unknown>): void;
+export function track(event: { name: EventName; props?: Record<string, unknown> }): void;
+export function track(
+  a: EventName | { name: EventName; props?: Record<string, unknown> },
+  props?: Record<string, unknown>,
+): void {
   if (typeof window === "undefined") return;
+  const name: EventName = typeof a === "string" ? a : a.name;
+  const incomingProps: Record<string, unknown> | undefined =
+    typeof a === "string" ? props : a.props;
   const common = {
     path: location.pathname,
     ts: Date.now(),
     deviceType: isTouch() ? "touch" : "pointer",
   };
-  const payload = { ...common, ...(props ?? {}) };
+  const payload = { ...common, ...(incomingProps ?? {}) };
 
   if (DEDUPE_EVENTS.has(name)) {
-    const key = makeDedupeKey(name, common.path, props);
+    const key = makeDedupeKey(name, common.path, incomingProps);
     if (emittedOnceKeys.has(key)) return;
     emittedOnceKeys.add(key);
   }
