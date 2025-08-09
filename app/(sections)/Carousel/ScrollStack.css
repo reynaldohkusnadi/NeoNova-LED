@@ -1,0 +1,23 @@
+.scroll-stack-scroller {
+  position: relative;
+  height: 80vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-stack-inner {
+  position: relative;
+  min-height: 200vh;
+  padding: 2rem 0;
+}
+
+.scroll-stack-card {
+  will-change: transform, filter;
+  transform-origin: top center;
+}
+
+.scroll-stack-end {
+  height: 50vh;
+}
+
+
