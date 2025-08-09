@@ -73,7 +73,14 @@ export async function submitLead(formData: FormData): Promise<SubmitLeadResult> 
         });
         delivered = true;
       } catch {
-        // fall through to SMTP
+        // fall through to SMTP; structured log
+        const elapsed = Date.now() - tStart;
+        console.error("submitLead_error", {
+          path: "submitLead",
+          provider: "resend",
+          elapsedMs: elapsed,
+          errorClass: "ProviderError",
+        });
       }
     }
 
@@ -86,18 +93,35 @@ export async function submitLead(formData: FormData): Promise<SubmitLeadResult> 
           secure: Number(SMTP_PORT) === 465,
           auth: { user: SMTP_USER, pass: SMTP_PASS },
         });
-        await transport.sendMail({
-          from: `Neo Nova <${SMTP_USER}>`,
-          to,
-          subject,
-          html,
-          text,
-        });
-        delivered = true;
+        try {
+          await transport.sendMail({
+            from: `Neo Nova <${SMTP_USER}>`,
+            to,
+            subject,
+            html,
+            text,
+          });
+          delivered = true;
+        } catch (e) {
+          const elapsed = Date.now() - tStart;
+          console.error("submitLead_error", {
+            path: "submitLead",
+            provider: "smtp",
+            elapsedMs: elapsed,
+            errorClass: (e as { name?: string })?.name ?? "ProviderError",
+          });
+        }
       }
     }
 
     if (!delivered) {
+      const elapsed = Date.now() - tStart;
+      console.error("submitLead_error", {
+        path: "submitLead",
+        provider: resendApiKey ? (process.env.SMTP_HOST ? "smtp" : "resend") : "none",
+        elapsedMs: elapsed,
+        errorClass: "DeliveryFailed",
+      });
       return {
         ok: false,
         message: "Email send failed. Please try again later or use WhatsApp.",
@@ -109,7 +133,12 @@ export async function submitLead(formData: FormData): Promise<SubmitLeadResult> 
     return { ok: true, message: `Thanks! We'll be in touch. (${elapsed}ms)`, softWarning };
   } catch (err) {
     const elapsed = Date.now() - tStart;
-    console.error("submitLead_error", { elapsed, err: (err as Error)?.message });
+    console.error("submitLead_error", {
+      path: "submitLead",
+      provider: "unknown",
+      elapsedMs: elapsed,
+      errorClass: (err as { name?: string })?.name ?? "Error",
+    });
     return { ok: false, message: "Something went wrong. Please try again." };
   }
 }
