@@ -17,6 +17,7 @@ Project structure:
 - `app/` App Router RSC-first structure
 - `content/site.ts` Typed content model (single source of truth)
 - `app/(sections)/*` Placeholder components for Hero3D, Carousel, ResultsBand, Form
+- `app/(sections)/*` Components for Hero3D, Carousel, ResultsBand, Form
 - `lib/` Stubs for analytics and motion/a11y hooks
 - `styles/tokens.css` Base tokens
 
@@ -36,6 +37,7 @@ Project structure:
 pnpm typecheck
 pnpm lint
 pnpm build
+pnpm test
 ```
 
 CI also runs Lighthouse CI and axe checks. See `.github/workflows/ci.yml`.

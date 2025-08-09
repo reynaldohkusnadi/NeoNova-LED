@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Analytics from "@/components/Analytics";
 import NavbarMinimal from "@/app/(sections)/Navbar/NavbarMinimal";
+import NavCtaBridge from "@/app/(sections)/Navbar/NavCtaBridge";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <Analytics />
         <NavbarMinimal />
+        <NavCtaBridge />
         {children}
       </body>
     </html>

@@ -20,10 +20,7 @@ export default function Home() {
       <ResultsBandReveal />
       {/* Optional aux slot renders only when content.cardsAux?.[0] exists */}
       <ProvenImpactAux card={content.cardsAux?.[0]} mode="intro" />
-      <SlideOverForm
-        ctaPrimary={content.form.ctaPrimary}
-        ctaSecondary={content.form.ctaSecondary}
-      />
+      <SlideOverForm />
     </main>
   );
 }
