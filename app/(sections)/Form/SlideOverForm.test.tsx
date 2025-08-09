@@ -18,7 +18,7 @@ describe("SlideOverForm", () => {
     });
     fireEvent.change(screen.getByLabelText("Company"), { target: { value: "ACME" } });
 
-    fireEvent.click(screen.getByRole("button", { name: /request demo/i }));
+    fireEvent.click(screen.getByRole("button", { name: /request pricing/i }));
 
     await waitFor(() => {
       expect(screen.getByRole("status")).toBeInTheDocument();

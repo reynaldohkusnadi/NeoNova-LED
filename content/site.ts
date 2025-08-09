@@ -32,38 +32,50 @@ export interface Content {
 }
 
 export const content = {
-  headline: "Neo Nova: Accelerate product impact",
+  headline: "The Future of Indoor Advertising",
   blurbShort:
-    "We build high‑performance web experiences with motion, 3D, and analytics baked in.",
+    "Discover a revolutionary cylindrical LED screen—flexible, transparent, captivating attention from every angle.",
   cardsCore: [
     {
-      id: "speed",
-      headline: "Blazing performance",
-      blurbShort: "Ship fast experiences that convert.",
-      ctaLabel: "See results",
+      id: "whyNeoNova",
+      headline: "Cutting-Edge LED Innovation",
+      blurbShort:
+        "Flexible, transparent screens designed for immersive, dynamic visuals. Capture your audience’s attention like never before.",
+      ctaLabel: "Learn more",
     },
     {
-      id: "motion",
-      headline: "Meaningful motion",
-      blurbShort: "Enhance clarity with delightful motion.",
-      ctaLabel: "View work",
+      id: "visibility360",
+      headline: "Impossible to Ignore",
+      blurbShort:
+        "A cylindrical design ensuring your content is seen from all directions, maximizing viewer engagement.",
+      ctaLabel: "Learn more",
     },
     {
-      id: "quality",
-      headline: "Quality guardrails",
-      blurbShort: "CI gates for accessibility and speed.",
-      ctaLabel: "How it works",
+      id: "dynamicContent",
+      headline: "Update Content Instantly",
+      blurbShort:
+        "Refresh your advertising campaign in real-time, delivering timely messages without additional costs.",
+      ctaLabel: "Learn more",
     },
   ],
   stats: [
-    { label: "Lighthouse", value: "90+" },
-    { label: "Axe criticals", value: "0" },
+    { label: "Purchase Influence", value: "80%" },
+    { label: "Sales Uplift", value: "25%" },
   ],
-  cardsAux: undefined,
+  cardsAux: [
+    {
+      id: "provenImpact",
+      headline: "Proven to Boost Sales",
+      blurbShort:
+        "80% consumer purchase rate, 25% sales uplift—drive measurable ROI with innovative digital signage.",
+      ctaLabel: "Learn more",
+    },
+  ],
   form: {
-    success: "Thanks! We'll be in touch shortly.",
-    ctaPrimary: "Request demo",
-    ctaSecondary: "Chat on WhatsApp",
-    whatsappPrefill: "Hi Neo Nova team — I'd love to learn more.",
+    success: "Thank you – we’ll get in touch!",
+    ctaPrimary: "Request pricing",
+    ctaSecondary: "Get in touch",
+    whatsappPrefill:
+      "Hello Neo Nova — I’m interested in pricing for the cylindrical LED. Please contact me via email/WhatsApp.",
   },
 } as const satisfies Content;
