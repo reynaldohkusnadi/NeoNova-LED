@@ -9,6 +9,7 @@ pnpm build
 ```
 
 Preview checks (CI):
+
 - Lighthouse CI (Perf ≥ 0.9)
 - axe-core accessibility (no criticals)
 
@@ -24,5 +25,3 @@ pnpm ci:budgets
 ```
 
 This prints first-load JS sizes and scans 3D assets directories; exit code 1 signals a budget failure.
-
-

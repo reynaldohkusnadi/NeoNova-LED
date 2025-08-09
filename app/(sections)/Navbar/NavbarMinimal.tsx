@@ -12,7 +12,9 @@ export default function NavbarMinimal() {
         className="w-full max-w-6xl mx-auto px-4 flex items-center justify-between"
         aria-label="Primary"
       >
-        <a href="#" className="font-medium">Neo Nova</a>
+        <a href="#" className="font-medium">
+          Neo Nova
+        </a>
         <div className="flex gap-3 items-center">
           <a
             href="#"
@@ -33,5 +35,3 @@ export default function NavbarMinimal() {
     </header>
   );
 }
-
-

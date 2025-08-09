@@ -1,9 +1,11 @@
 ## 1) Architecture Overview & Tenets
 
 ### Purpose
+
 Define a lean, reliable system to power a **single-page, lead-gen site** with premium motion (GSAP) and a lightweight WebGL hero, deployed on **Vercel** with **Next.js 14 (App Router)**. Backend surface is minimal: **Server Actions** for form handling + email delivery; everything else is static.
 
 ### High-Level Decisions
+
 - **Rendering model:** RSC-first with **Client Components** only where needed (Hero3D, Carousel, SlideOverForm).
 - **3D strategy:** Start with **minimal Three.js core** (tree-shaken) to render a **procedural cylinder**; hard fallback to a static hero image when `prefers-reduced-motion` or WebGL unsupported. Initial 3D payload budget **≤ 1.2 MB**.
 - **Motion layer:** **GSAP + ScrollTrigger**, loaded via `dynamic import()` and gated by a global `usePrefersReducedMotion()` hook. All pinned/scroll timelines are destroyable/garbage-free.
@@ -14,6 +16,7 @@ Define a lean, reliable system to power a **single-page, lead-gen site** with pr
 - **Performance:** Aggressive code-split; app shell JS ≤ **140 KB gzip**; images via `next/image`; no animation tick > **50 ms**; CLS ≤ **0.01**.
 
 ### System Context (bird’s-eye)
+
 ```mermaid
 flowchart LR
   U[User Browser] -->|HTTPS| FE[Next.js 14 on Vercel]
@@ -31,9 +34,9 @@ flowchart LR
 ```
 
 ### Non-Goals (v1)
+
 - No CMS, no multi-language, no server-stored analytics, no complex APIs.
 
 ### Rationale
+
 This architecture is the smallest thing that can win: static-first, one serverless path for the form, analytics handled client-side through Vercel, and a **contained 3D** experience behind strict budgets and fallbacks. It matches the PRD’s performance, a11y, and reliability constraints while leaving clear v2 paths (CMS, case studies, richer 3D).
-
-

@@ -30,5 +30,3 @@ export default function ProvenImpactAux({ card, mode = "intro" }: ProvenImpactAu
     </section>
   );
 }
-
-

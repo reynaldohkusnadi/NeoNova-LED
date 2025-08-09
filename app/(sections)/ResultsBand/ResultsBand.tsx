@@ -7,7 +7,11 @@ interface ResultsBandProps {
 
 export default function ResultsBand({ stats }: ResultsBandProps) {
   return (
-    <section aria-label="Key results" className="w-full max-w-3xl mx-auto py-8" role="region">
+    <section
+      aria-label="Key results"
+      className="w-full max-w-3xl mx-auto py-8"
+      role="region"
+    >
       <div className="grid grid-cols-2 gap-4" data-results-band>
         {stats.map((s) => (
           <div
@@ -26,5 +30,3 @@ export default function ResultsBand({ stats }: ResultsBandProps) {
     </section>
   );
 }
-
-

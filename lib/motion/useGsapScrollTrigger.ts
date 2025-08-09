@@ -38,9 +38,14 @@ export function useGsapScrollTrigger() {
     gsap: typeof gsapType;
     ScrollTrigger: typeof ScrollTriggerType;
   }> {
-    const [gsapMod, stMod] = await Promise.all([import("gsap"), import("gsap/ScrollTrigger")]);
+    const [gsapMod, stMod] = await Promise.all([
+      import("gsap"),
+      import("gsap/ScrollTrigger"),
+    ]);
     const gsap = (gsapMod as unknown as { default: typeof gsapType }).default;
-    const ScrollTrigger = (stMod as unknown as { ScrollTrigger: typeof ScrollTriggerType }).ScrollTrigger;
+    const ScrollTrigger = (
+      stMod as unknown as { ScrollTrigger: typeof ScrollTriggerType }
+    ).ScrollTrigger;
     if (!registered) {
       gsap.registerPlugin(ScrollTrigger);
       registered = true;
@@ -74,5 +79,3 @@ export function useGsapScrollTrigger() {
 
   return { create } as const;
 }
-
-

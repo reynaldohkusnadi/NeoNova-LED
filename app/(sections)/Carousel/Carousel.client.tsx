@@ -18,9 +18,20 @@ export function CarouselReveal() {
         gsap.fromTo(
           cards,
           { opacity: 0, y: 16, scale: 0.98 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.08, ease: "power2.out" }
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power2.out",
+          },
         );
-        const st = ScrollTrigger.create({ trigger: section, start: "top 85%", once: true });
+        const st = ScrollTrigger.create({
+          trigger: section,
+          start: "top 85%",
+          once: true,
+        });
         return () => st.kill();
       },
     });
@@ -28,5 +39,3 @@ export function CarouselReveal() {
 
   return null;
 }
-
-

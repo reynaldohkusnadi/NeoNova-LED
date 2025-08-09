@@ -14,5 +14,3 @@ describe("CardCarousel", () => {
     expect(articles[2]).toHaveTextContent(content.cardsCore[2].headline);
   });
 });
-
-

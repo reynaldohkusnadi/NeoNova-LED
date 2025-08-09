@@ -11,17 +11,17 @@ Traditional indoor signage often struggles to stand out in cluttered visual envi
 **Solution Summary:**  
 Neo Nova delivers a 3D cylindrical LED format with 360° visibility, real-time content updates, and scroll-triggered interactive storytelling. Integrated analytics provide measurable performance data, ensuring marketing teams can prove and improve campaign effectiveness without costly physical updates.
 
-**Target Audience:**  
-- Retailers and mall tenants seeking high-impact in-store promotion  
-- Brand advertisers in high-traffic commercial spaces  
-- Event venues and experiential marketers  
+**Target Audience:**
+
+- Retailers and mall tenants seeking high-impact in-store promotion
+- Brand advertisers in high-traffic commercial spaces
+- Event venues and experiential marketers
 - Agencies seeking innovative display formats for client campaigns
 
-**Key Differentiators:**  
-- Cylindrical design for complete 360° visibility  
-- Transparent, flexible LED technology preserving architectural aesthetics  
-- Real-time content updates without added operational costs  
-- Built-in analytics for ROI measurement  
+**Key Differentiators:**
+
+- Cylindrical design for complete 360° visibility
+- Transparent, flexible LED technology preserving architectural aesthetics
+- Real-time content updates without added operational costs
+- Built-in analytics for ROI measurement
 - Premium motion design powered by GSAP + ScrollTrigger
-
-

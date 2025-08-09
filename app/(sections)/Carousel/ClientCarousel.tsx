@@ -18,5 +18,3 @@ export default function ClientCarousel({ cards }: ClientCarouselProps) {
     </section>
   );
 }
-
-

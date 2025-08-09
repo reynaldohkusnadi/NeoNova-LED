@@ -9,7 +9,10 @@ const THREE_D_PAYLOAD_BUDGET_BYTES = 1_200_000; // 1.2 MB
 
 function run(cmd, args = []) {
   return new Promise((resolveCmd, reject) => {
-    const child = spawn(cmd, args, { stdio: ["ignore", "pipe", "pipe"], env: process.env });
+    const child = spawn(cmd, args, {
+      stdio: ["ignore", "pipe", "pipe"],
+      env: process.env,
+    });
     let stdout = "";
     let stderr = "";
     child.stdout.on("data", (d) => (stdout += d.toString()));
@@ -47,11 +50,7 @@ async function gzipSizeOfFile(path) {
 }
 
 async function computeThreeDPayloadBytes() {
-  const candidateDirs = [
-    "public/models",
-    "public/3d",
-    "app/(sections)/Hero3D/assets",
-  ];
+  const candidateDirs = ["public/models", "public/3d", "app/(sections)/Hero3D/assets"];
   let total = 0;
   for (const dir of candidateDirs) {
     const abs = resolve(process.cwd(), dir);
@@ -82,15 +81,17 @@ async function main() {
 
   const { sharedKb, routeKb } = extractNumbersFromNextBuild(stdout);
   if (!Number.isFinite(sharedKb) || !Number.isFinite(routeKb)) {
-    console.log("[budget] Could not parse Next.js build output; skipping JS budget check.");
+    console.log(
+      "[budget] Could not parse Next.js build output; skipping JS budget check.",
+    );
   } else {
     console.log(`[budget] App shell (shared) First Load JS: ${sharedKb.toFixed(1)} kB`);
     console.log(`[budget] Route '/' First Load JS: ${routeKb.toFixed(1)} kB`);
     if (sharedKb > APP_SHELL_BUDGET_KB || routeKb > APP_SHELL_BUDGET_KB) {
       console.error(
         `[budget] FAIL: App shell JS exceeds ${APP_SHELL_BUDGET_KB} kB (shared=${sharedKb.toFixed(
-          1
-        )}, route=${routeKb.toFixed(1)})`
+          1,
+        )}, route=${routeKb.toFixed(1)})`,
       );
       process.exit(1);
     }
@@ -99,8 +100,9 @@ async function main() {
 
   const threeDBytes = await computeThreeDPayloadBytes();
   console.log(
-    `[budget] 3D payload total: ${(threeDBytes / 1_000_000).toFixed(2)} MB (budget ${(THREE_D_PAYLOAD_BUDGET_BYTES /
-      1_000_000).toFixed(2)} MB)`
+    `[budget] 3D payload total: ${(threeDBytes / 1_000_000).toFixed(2)} MB (budget ${(
+      THREE_D_PAYLOAD_BUDGET_BYTES / 1_000_000
+    ).toFixed(2)} MB)`,
   );
   if (threeDBytes > THREE_D_PAYLOAD_BUDGET_BYTES) {
     console.error("[budget] FAIL: 3D payload exceeds budget.");
@@ -113,5 +115,3 @@ main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-
-

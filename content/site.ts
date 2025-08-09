@@ -67,5 +67,3 @@ export const content = {
     whatsappPrefill: "Hi Neo Nova team — I'd love to learn more.",
   },
 } as const satisfies Content;
-
-

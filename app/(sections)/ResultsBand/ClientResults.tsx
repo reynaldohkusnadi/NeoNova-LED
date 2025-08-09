@@ -18,5 +18,3 @@ export default function ClientResults({ stats }: ClientResultsProps) {
     </section>
   );
 }
-
-

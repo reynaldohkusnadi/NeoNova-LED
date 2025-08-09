@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ResultsBand from "./ResultsBand";
 import { content } from "@/content/site";
 
@@ -14,5 +14,3 @@ describe("ResultsBand", () => {
     expect(screen.getByText(content.stats[1].label)).toBeInTheDocument();
   });
 });
-
-

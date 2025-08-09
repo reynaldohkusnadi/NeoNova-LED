@@ -40,5 +40,3 @@ jobs:
         run: pnpm dlx @axe-core/cli@latest http://localhost:3000 --chromium --exit --timeout 60
         env:
           CI: true
-
-

@@ -67,7 +67,7 @@ export default function ClientHero({ headline, blurb }: ClientHeroProps) {
             chars,
             { y: 24, opacity: 0 },
             { y: 0, opacity: 1, duration: 0.6, stagger: 0.02, ease: "power3.out" },
-            0
+            0,
           );
         }
         if (sub) {
@@ -75,7 +75,7 @@ export default function ClientHero({ headline, blurb }: ClientHeroProps) {
             sub,
             { opacity: 0, y: 12 },
             { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-            0.2
+            0.2,
           );
         }
 
@@ -95,7 +95,12 @@ export default function ClientHero({ headline, blurb }: ClientHeroProps) {
           const cy = rect.top + rect.height / 2;
           const dx = (e.clientX - cx) / rect.width;
           const dy = (e.clientY - cy) / rect.height;
-          gsap.to(scope, { rotateX: dy * -4, rotateY: dx * 6, duration: 0.3, ease: "power2.out" });
+          gsap.to(scope, {
+            rotateX: dy * -4,
+            rotateY: dx * 6,
+            duration: 0.3,
+            ease: "power2.out",
+          });
         };
         scope.addEventListener("mousemove", onMove);
 

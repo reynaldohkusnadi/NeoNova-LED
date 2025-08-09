@@ -10,5 +10,3 @@ describe("NavbarMinimal", () => {
     expect(screen.getByText(content.form.ctaSecondary)).toBeInTheDocument();
   });
 });
-
-

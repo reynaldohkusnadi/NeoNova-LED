@@ -22,8 +22,16 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, Segoe UI, Roboto,
-    Ubuntu, Cantarell, Noto Sans, sans-serif;
+  font-family:
+    var(--font-sans),
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    Noto Sans,
+    sans-serif;
 }
 
 /* Accessibility defaults */

@@ -13,5 +13,3 @@ export function ResponsiveImage({ sizes, ...rest }: ResponsiveImageProps) {
   const defaultSizes = sizes ?? "(max-width: 640px) 100vw, 50vw";
   return <Image sizes={defaultSizes} {...rest} alt={rest.alt ?? ""} />;
 }
-
-

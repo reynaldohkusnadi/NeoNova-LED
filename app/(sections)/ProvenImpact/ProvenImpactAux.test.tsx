@@ -26,5 +26,3 @@ describe("ProvenImpactAux", () => {
     expect(screen.getByRole("article")).toBeInTheDocument();
   });
 });
-
-

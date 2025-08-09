@@ -22,6 +22,7 @@ export default function SlideOverForm() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<SubmitResult | null>(null);
+  const [waHref, setWaHref] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const firstFieldRef = useRef<HTMLInputElement | null>(null);
   const lastFocusableRef = useRef<HTMLButtonElement | null>(null);
@@ -45,6 +46,7 @@ export default function SlideOverForm() {
   const open = useCallback((source?: string) => {
     setIsOpen(true);
     setSubmitResult(null);
+    setWaHref(null);
     setTimeout(() => firstFieldRef.current?.focus(), 0);
     track({ name: "form_open", props: { source } });
   }, []);
@@ -53,6 +55,7 @@ export default function SlideOverForm() {
     setIsOpen(false);
     setErrors({});
     setSubmitResult(null);
+    setWaHref(null);
     setTimeout(() => previouslyFocusedRef.current?.focus(), 0);
   }, []);
 
@@ -134,11 +137,17 @@ export default function SlideOverForm() {
 
       const res = await submitLead(fd);
       track({ name: res.ok ? "form_submit_success" : "form_submit_error" });
+      if (res.ok && fields.whatsapp) {
+        const num = fields.whatsapp.replace(/[^\d+]/g, "");
+        const text = encodeURIComponent(content.form.whatsappPrefill);
+        const href = `https://wa.me/${num}?text=${text}`;
+        setWaHref(href);
+      }
       setIsSubmitting(false);
       setSubmitResult({ ok: res.ok, message: res.message ?? content.form.success });
       if (liveRegionRef.current && res.message) liveRegionRef.current.textContent = res.message;
     },
-    [validate],
+    [validate, fields.whatsapp],
   );
 
   return (
@@ -280,9 +289,20 @@ export default function SlideOverForm() {
           </div>
 
           {submitResult && (
-            <p className="text-sm" aria-live="polite" role="status">
-              {submitResult.message}
-            </p>
+            <div className="grid gap-2" aria-live="polite" role="status">
+              <p className="text-sm">{submitResult.message}</p>
+              {waHref && (
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-9 px-3 items-center justify-center rounded-md border"
+                  onClick={() => track({ name: "whatsapp_deeplink" })}
+                >
+                  Continue in WhatsApp
+                </a>
+              )}
+            </div>
           )}
         </form>
       </div>

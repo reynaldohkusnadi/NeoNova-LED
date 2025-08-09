@@ -11,5 +11,3 @@ export default function StaticHero({ headline, blurb }: StaticHeroProps) {
     </section>
   );
 }
-
-
