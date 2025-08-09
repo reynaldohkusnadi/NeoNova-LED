@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import { z } from "zod";
 import { content } from "@/content/site";
 import { track } from "@/lib/analytics/track";
+import { submitLead } from "@/app/actions/submitLead";
 
 interface SubmitResult {
   ok: boolean;
@@ -27,15 +28,11 @@ export default function SlideOverForm() {
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const liveRegionRef = useRef<HTMLDivElement | null>(null);
 
-  const formIds = useMemo(() => {
-    return {
-      name: useId(),
-      email: useId(),
-      company: useId(),
-      whatsapp: useId(),
-      description: useId(),
-    };
-  }, []);
+  const nameId = useId();
+  const emailId = useId();
+  const companyId = useId();
+  const whatsappId = useId();
+  const descriptionId = useId();
 
   const [fields, setFields] = useState({
     name: "",
@@ -126,17 +123,20 @@ export default function SlideOverForm() {
   }, [fields]);
 
   const onSubmit = useCallback(
-    async (e: React.FormEvent) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (!validate()) return;
       setIsSubmitting(true);
 
-      // Placeholder success after small delay; no server action in this story
-      await new Promise((r) => setTimeout(r, 300));
+      const fd = new FormData(e.currentTarget);
+      // timing guard start sent from client open time
+      if (!fd.get("t0")) fd.set("t0", String(Date.now() - 1200));
+
+      const res = await submitLead(fd);
+      track({ name: res.ok ? "form_submit_success" : "form_submit_error" });
       setIsSubmitting(false);
-      const res: SubmitResult = { ok: true, message: content.form.success };
-      setSubmitResult(res);
-      if (liveRegionRef.current) liveRegionRef.current.textContent = res.message;
+      setSubmitResult({ ok: res.ok, message: res.message ?? content.form.success });
+      if (liveRegionRef.current && res.message) liveRegionRef.current.textContent = res.message;
     },
     [validate],
   );
@@ -162,7 +162,7 @@ export default function SlideOverForm() {
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-labelledby={formIds.description}
+        aria-labelledby={descriptionId}
         className={
           isOpen
             ? "fixed inset-y-0 right-0 z-[calc(var(--nn-z-modal)+1)] w-full max-w-md bg-[var(--background)] shadow-xl border-l outline-none transform translate-x-0 transition-transform"
@@ -171,7 +171,7 @@ export default function SlideOverForm() {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-4 border-b">
-          <h2 id={formIds.description} className="text-lg font-medium">
+          <h2 id={descriptionId} className="text-lg font-medium">
             Request pricing
           </h2>
           <button
@@ -186,30 +186,33 @@ export default function SlideOverForm() {
         </div>
 
         <form className="p-4 grid gap-4" onSubmit={onSubmit} noValidate>
+          {/* Honeypot + timing fields */}
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" />
+          <input type="hidden" name="t0" value={String(Date.now())} />
           <div className="grid gap-1">
-            <label htmlFor={formIds.name}>Name</label>
+            <label htmlFor={nameId}>Name</label>
             <input
-              id={formIds.name}
+              id={nameId}
               name="name"
               ref={firstFieldRef}
               value={fields.name}
               onChange={onChange}
               className="h-10 px-3 rounded-md border"
               aria-invalid={Boolean(errors.name) || undefined}
-              aria-describedby={errors.name ? `${formIds.name}-error` : undefined}
+              aria-describedby={errors.name ? `${nameId}-error` : undefined}
               required
             />
             {errors.name && (
-              <p id={`${formIds.name}-error`} className="text-sm text-red-600">
+              <p id={`${nameId}-error`} className="text-sm text-red-600">
                 {errors.name}
               </p>
             )}
           </div>
 
           <div className="grid gap-1">
-            <label htmlFor={formIds.email}>Work Email</label>
+            <label htmlFor={emailId}>Work Email</label>
             <input
-              id={formIds.email}
+              id={emailId}
               name="email"
               inputMode="email"
               autoCapitalize="off"
@@ -218,39 +221,39 @@ export default function SlideOverForm() {
               onChange={onChange}
               className="h-10 px-3 rounded-md border"
               aria-invalid={Boolean(errors.email) || undefined}
-              aria-describedby={errors.email ? `${formIds.email}-error` : undefined}
+              aria-describedby={errors.email ? `${emailId}-error` : undefined}
               required
             />
             {errors.email && (
-              <p id={`${formIds.email}-error`} className="text-sm text-red-600">
+              <p id={`${emailId}-error`} className="text-sm text-red-600">
                 {errors.email}
               </p>
             )}
           </div>
 
           <div className="grid gap-1">
-            <label htmlFor={formIds.company}>Company</label>
+            <label htmlFor={companyId}>Company</label>
             <input
-              id={formIds.company}
+              id={companyId}
               name="company"
               value={fields.company}
               onChange={onChange}
               className="h-10 px-3 rounded-md border"
               aria-invalid={Boolean(errors.company) || undefined}
-              aria-describedby={errors.company ? `${formIds.company}-error` : undefined}
+              aria-describedby={errors.company ? `${companyId}-error` : undefined}
               required
             />
             {errors.company && (
-              <p id={`${formIds.company}-error`} className="text-sm text-red-600">
+              <p id={`${companyId}-error`} className="text-sm text-red-600">
                 {errors.company}
               </p>
             )}
           </div>
 
           <div className="grid gap-1">
-            <label htmlFor={formIds.whatsapp}>WhatsApp</label>
+            <label htmlFor={whatsappId}>WhatsApp</label>
             <input
-              id={formIds.whatsapp}
+              id={whatsappId}
               name="whatsapp"
               inputMode="tel"
               value={fields.whatsapp}
@@ -277,7 +280,7 @@ export default function SlideOverForm() {
           </div>
 
           {submitResult && (
-            <p className="text-sm" aria-live="polite">
+            <p className="text-sm" aria-live="polite" role="status">
               {submitResult.message}
             </p>
           )}
