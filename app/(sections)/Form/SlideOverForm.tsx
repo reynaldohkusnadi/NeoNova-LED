@@ -48,7 +48,7 @@ export default function SlideOverForm() {
     setSubmitResult(null);
     setWaHref(null);
     setTimeout(() => firstFieldRef.current?.focus(), 0);
-    track({ name: "form_open", props: { source } });
+    track("form_open", { source });
   }, []);
 
   const close = useCallback(() => {
@@ -136,7 +136,7 @@ export default function SlideOverForm() {
       if (!fd.get("t0")) fd.set("t0", String(Date.now() - 1200));
 
       const res = await submitLead(fd);
-      track({ name: res.ok ? "form_submit_success" : "form_submit_error" });
+      track(res.ok ? "form_submit_success" : "form_submit_error");
       if (res.ok && fields.whatsapp) {
         const num = fields.whatsapp.replace(/[^\d+]/g, "");
         const text = encodeURIComponent(content.form.whatsappPrefill);
@@ -285,7 +285,7 @@ export default function SlideOverForm() {
               className="inline-flex h-9 px-4 items-center justify-center rounded-md bg-[var(--nn-foreground)] text-[var(--nn-primary-contrast)] disabled:opacity-60"
             >
               {isSubmitting ? "Submitting…" : content.form.ctaPrimary}
-            </button>
+        </button>
           </div>
 
           {submitResult && (
@@ -297,7 +297,7 @@ export default function SlideOverForm() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-9 px-3 items-center justify-center rounded-md border"
-                  onClick={() => track({ name: "whatsapp_deeplink" })}
+                  onClick={() => track("whatsapp_deeplink")}
                 >
                   Continue in WhatsApp
                 </a>

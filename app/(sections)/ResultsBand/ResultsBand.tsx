@@ -19,6 +19,7 @@ export default function ResultsBand({ stats }: ResultsBandProps) {
             tabIndex={0}
             className="rounded-lg border p-4 text-center outline-none focus-visible:outline focus-visible:outline-2"
             aria-label={`${s.label}: ${s.value}`}
+            data-stat
           >
             <div className="text-2xl font-semibold" data-stat-value>
               {s.value}

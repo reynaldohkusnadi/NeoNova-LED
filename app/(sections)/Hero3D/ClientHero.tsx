@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "@/lib/a11y/usePrefersReducedMotion";
 import { useGsapScrollTrigger } from "@/lib/motion/useGsapScrollTrigger";
 import StaticHero from "./StaticHero";
+import { track } from "@/lib/analytics/track";
 
 interface ClientHeroProps {
   headline: string;
@@ -33,6 +34,7 @@ export default function ClientHero({ headline, blurb }: ClientHeroProps) {
   const [supported, setSupported] = useState<boolean | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { create } = useGsapScrollTrigger();
+  const didViewRef = useRef(false);
 
   useEffect(() => {
     // Feature detect client-side
@@ -45,6 +47,10 @@ export default function ClientHero({ headline, blurb }: ClientHeroProps) {
   }, [prefersReduced]);
 
   useEffect(() => {
+    if (!didViewRef.current) {
+      track("hero_view", { section: "hero" });
+      didViewRef.current = true;
+    }
     if (!supported) return;
     // Enhanced timeline: staggered headline reveal + card scale on scroll
     create({

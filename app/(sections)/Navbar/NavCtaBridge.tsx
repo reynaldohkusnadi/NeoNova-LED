@@ -13,8 +13,11 @@ export default function NavCtaBridge(): null {
       const target = ev.currentTarget as HTMLAnchorElement | null;
       if (!target) return;
       ev.preventDefault();
-      const kind = target.dataset.analyticsEvent ?? "cta_click";
-      track({ name: String(kind) });
+      const kind = (target.dataset.analyticsEvent as
+        | "cta_click_primary"
+        | "cta_click_secondary"
+        | undefined) ?? "cta_click_primary";
+      track(kind, { location: "navbar" });
       // Announce intent to open form
       const openEvent = new CustomEvent("nn:openSlideOver", {
         detail: { source: kind },

@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useGsapScrollTrigger } from "@/lib/motion/useGsapScrollTrigger";
 import { usePrefersReducedMotion } from "@/lib/a11y/usePrefersReducedMotion";
+import { track } from "@/lib/analytics/track";
 
 export function ResultsBandReveal() {
   const prefersReduced = usePrefersReducedMotion();
   const { create } = useGsapScrollTrigger();
+  const didViewRef = useRef(false);
 
   useEffect(() => {
     if (prefersReduced) return;
@@ -41,6 +43,10 @@ export function ResultsBandReveal() {
           start: "top 85%",
           once: true,
           onEnter: () => {
+            if (!didViewRef.current) {
+              track("results_band_view", { section: "results_band" });
+              didViewRef.current = true;
+            }
             numbers.forEach(({ el }, i) => {
               const target = initial[i];
               if (!target) return;
@@ -59,6 +65,9 @@ export function ResultsBandReveal() {
                   },
                 },
               );
+              const stat = el.parentElement?.querySelector(".opacity-70") as HTMLElement | null;
+              const label = stat?.textContent || "";
+              if (label) track("stat_reveal", { section: "results_band", id: label });
             });
           },
         });

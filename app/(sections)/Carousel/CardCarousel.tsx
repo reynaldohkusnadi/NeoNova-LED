@@ -14,6 +14,7 @@ export default function CardCarousel({ cards }: CardCarouselProps) {
             key={card.id}
             tabIndex={0}
             className="rounded-lg border p-4 outline-none focus-visible:outline focus-visible:outline-2"
+            data-card-id={card.id}
           >
             <div className="text-xs uppercase tracking-wide opacity-60 mb-1">
               {card.id}
