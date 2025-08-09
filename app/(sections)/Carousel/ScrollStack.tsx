@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useLayoutEffect, useRef, useCallback, PropsWithChildren } from "react";
+import React, { useLayoutEffect, useRef, useCallback, PropsWithChildren, useEffect, useState } from "react";
+import { usePrefersReducedMotion } from "@/lib/a11y/usePrefersReducedMotion";
 import Lenis from "lenis";
 import "./ScrollStack.css";
 
@@ -43,6 +44,20 @@ export default function ScrollStack({
   const cardsRef = useRef<HTMLElement[]>([]);
   const lastTransformsRef = useRef<Map<number, { translateY: number; scale: number; rotation: number; blur: number }>>(new Map());
   const isUpdatingRef = useRef(false);
+  const prefersReduced = usePrefersReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth < 640);
+    }
+  }, []);
+
+  const dItemScale = isMobile ? itemScale * 0.6 : itemScale;
+  const dItemDistance = isMobile ? itemDistance * 0.6 : itemDistance;
+  const dRotation = isMobile ? rotationAmount * 0.5 : rotationAmount;
+  const dBlur = isMobile ? blurAmount * 0.6 : blurAmount;
+  const dBaseScale = isMobile ? Math.min(0.95, baseScale + 0.05) : baseScale;
 
   const calculateProgress = useCallback((scrollTop: number, start: number, end: number) => {
     if (scrollTop < start) return 0;
@@ -80,12 +95,12 @@ export default function ScrollStack({
       const pinEnd = endElementTop - containerHeight / 2;
 
       const scaleProgress = calculateProgress(scrollTop, triggerStart, triggerEnd);
-      const targetScale = baseScale + i * itemScale;
+      const targetScale = dBaseScale + i * dItemScale;
       const scale = 1 - scaleProgress * (1 - targetScale);
-      const rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
+      const rotation = dRotation ? i * dRotation * scaleProgress : 0;
 
       let blur = 0;
-      if (blurAmount) {
+      if (dBlur) {
         let topCardIndex = 0;
         for (let j = 0; j < cardsRef.current.length; j++) {
           const jCardTop = cardsRef.current[j].offsetTop;
@@ -94,7 +109,7 @@ export default function ScrollStack({
         }
         if (i < topCardIndex) {
           const depthInStack = topCardIndex - i;
-          blur = Math.max(0, depthInStack * blurAmount);
+          blur = Math.max(0, depthInStack * dBlur);
         }
       }
 
@@ -142,13 +157,13 @@ export default function ScrollStack({
 
     isUpdatingRef.current = false;
   }, [
-    itemScale,
+    dItemScale,
     itemStackDistance,
     stackPosition,
     scaleEndPosition,
-    baseScale,
-    rotationAmount,
-    blurAmount,
+    dBaseScale,
+    dRotation,
+    dBlur,
     onStackComplete,
     calculateProgress,
     parsePercentage,
@@ -202,7 +217,7 @@ export default function ScrollStack({
     const transformsCache = lastTransformsRef.current;
 
     cards.forEach((card, i) => {
-      if (i < cards.length - 1) card.style.marginBottom = `${itemDistance}px`;
+      if (i < cards.length - 1) card.style.marginBottom = `${dItemDistance}px`;
       card.style.willChange = "transform, filter";
       card.style.transformOrigin = "top center";
       card.style.backfaceVisibility = "hidden";
@@ -212,8 +227,10 @@ export default function ScrollStack({
       (card.style as unknown as { webkitPerspective?: string }).webkitPerspective = "1000px";
     });
 
-    setupLenis();
-    updateCardTransforms();
+    if (!prefersReduced) {
+      setupLenis();
+      updateCardTransforms();
+    }
 
     return () => {
       if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
@@ -224,18 +241,19 @@ export default function ScrollStack({
       isUpdatingRef.current = false;
     };
   }, [
-    itemDistance,
-    itemScale,
+    dItemDistance,
+    dItemScale,
     itemStackDistance,
     stackPosition,
     scaleEndPosition,
-    baseScale,
+    dBaseScale,
     scaleDuration,
-    rotationAmount,
-    blurAmount,
+    dRotation,
+    dBlur,
     onStackComplete,
     setupLenis,
     updateCardTransforms,
+    prefersReduced,
   ]);
 
   return (

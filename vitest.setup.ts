@@ -8,3 +8,19 @@ if (typeof (globalThis as any).ResizeObserver === "undefined") {
     disconnect() {}
   };
 }
+
+// Basic matchMedia polyfill for tests
+if (typeof (window as any).matchMedia !== "function") {
+  (window as any).matchMedia = (query: string) => {
+    return {
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => false,
+    } as unknown as MediaQueryList;
+  };
+}
