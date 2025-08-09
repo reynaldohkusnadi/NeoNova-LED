@@ -22,10 +22,20 @@ function run(cmd, args = []) {
 }
 
 function extractNumbersFromNextBuild(output) {
-  const sharedMatch = output.match(/First Load JS shared by all\s+([0-9.]+)\s*kB/);
-  const routeMatch = output.match(/\n┌[^\n]*\n[^]*?First Load JS\s+([0-9.]+)\s*kB/);
-  const sharedKb = sharedMatch ? parseFloat(sharedMatch[1]) : NaN;
-  const routeKb = routeMatch ? parseFloat(routeMatch[1]) : NaN;
+  const lines = output.split(/\r?\n/);
+  let sharedKb = NaN;
+  let routeKb = NaN;
+  for (const line of lines) {
+    if (Number.isNaN(sharedKb)) {
+      const m = line.match(/First Load JS shared by all\s+([0-9.]+)\s*kB/);
+      if (m) sharedKb = parseFloat(m[1]);
+    }
+    if (line.includes("/ ")) {
+      // Example: "┌ ○ /                                      412 B         100 kB"
+      const m = line.match(/([0-9.]+)\s*kB\s*$/);
+      if (m) routeKb = parseFloat(m[1]);
+    }
+  }
   return { sharedKb, routeKb };
 }
 
